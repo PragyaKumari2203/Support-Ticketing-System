@@ -29,21 +29,6 @@ A role-based support ticket management system built using **React, Firebase Auth
 - 🔹 **Responsive UI** 
 - 🔹 **Form Validations** (Required Fields, Email & Phone Validation, File Upload)
 
-## 📜 Project Structure
-
-/support-ticket-system
-│── public
-│── src
-│   ├── components
-│   │   ├── ticketForm.js  
-│   │   ├── dashboard.js  
-│   │   ├── welcome.js    
-│   │   ├── login.js        
-│   ├── firebase.js     
-│   ├── App.js            
-│── package.json          
-│── README.md  
-
 ## 🚀 Deployment
 
 You can deploy the project using **Firebase Hosting, Vercel, or Netlify**.
