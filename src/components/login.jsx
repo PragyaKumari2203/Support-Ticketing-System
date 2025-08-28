@@ -33,7 +33,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       // Redirect based on email (for agent) or role (for customers)
       if (email === "agent@support.com") {
-        navigate("/dashboard");
+        navigate("/agent-dashboard");
       } else {
         navigate("/customer-dashboard");
       }

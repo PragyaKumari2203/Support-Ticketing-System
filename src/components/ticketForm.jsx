@@ -3,7 +3,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db, auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const TicketForm = () => {
   const [title, setTitle] = useState("");
@@ -93,7 +93,7 @@ const TicketForm = () => {
   };
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   const goToDashboard = () => {

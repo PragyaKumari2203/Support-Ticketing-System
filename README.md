@@ -9,15 +9,15 @@ A role-based support ticket management system built using **React, Firebase Auth
 
 ## 🔑 Authentication Credentials
 
-### Customer:
-
-- ✉️ Email: `customer@support.com`
-- 🔑 Password: `customer123`
-
 ### Agent:
 
 - ✉️ Email: `agent@support.com`
 - 🔑 Password: `agent123`
+
+### Customer:
+
+Register as a new user
+
 
 ## 📌 Features
 

@@ -39,11 +39,18 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }, [user]);
 
   if (loading || checkingRole) {
-    return <div>Loading...</div>;
-  }
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-500"></div>
+        <p className="text-gray-600 text-lg font-medium">Loading your dashboard...</p>
+      </div>
+    </div>
+  );
+}
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (!allowedRoles.includes(userRole)) {
