@@ -1,8 +1,8 @@
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../firebase';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'react-feather';
-import { useState, useEffect } from 'react';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X } from "react-feather";
+import { useState, useEffect } from "react";
 import {
   collection,
   query,
@@ -11,21 +11,21 @@ import {
   updateDoc,
   deleteDoc,
   onSnapshot,
-  orderBy
-} from 'firebase/firestore';
+  orderBy,
+} from "firebase/firestore";
 
 // Status badge colors mapping
 const statusColors = {
-  Open: 'bg-blue-100 text-blue-800',
-  'In Progress': 'bg-yellow-100 text-yellow-800',
-  Resolved: 'bg-green-100 text-green-800'
+  Open: "bg-blue-100 text-blue-800",
+  "In Progress": "bg-yellow-100 text-yellow-800",
+  Resolved: "bg-green-100 text-green-800",
 };
 
 // Priority colors mapping
 const priorityColors = {
-  High: 'text-red-600',
-  Medium: 'text-yellow-600',
-  Low: 'text-green-600'
+  High: "text-red-600",
+  Medium: "text-yellow-600",
+  Low: "text-green-600",
 };
 
 const TicketCard = ({ ticket, onStatusChange, onDelete }) => (
@@ -54,10 +54,12 @@ const TicketCard = ({ ticket, onStatusChange, onDelete }) => (
             <option value="Resolved">Resolved</option>
           </select>
         </div>
-        
+
         <div>
           <span className="font-semibold">Priority:</span>
-          <span className={`ml-2 font-medium ${priorityColors[ticket.priority]}`}>
+          <span
+            className={`ml-2 font-medium ${priorityColors[ticket.priority]}`}
+          >
             {ticket.priority}
           </span>
         </div>
@@ -80,7 +82,9 @@ const TicketCard = ({ ticket, onStatusChange, onDelete }) => (
 
 const TicketSection = ({ title, tickets, onStatusChange, onDelete }) => (
   <div className="mb-8">
-    <h2 className="text-xl font-bold mb-4 text-gray-800">{title} ({tickets.length})</h2>
+    <h2 className="text-xl font-bold mb-4 text-gray-800">
+      {title} ({tickets.length})
+    </h2>
     {tickets.length > 0 ? (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {tickets.map((ticket) => (
@@ -103,7 +107,10 @@ const TicketSection = ({ title, tickets, onStatusChange, onDelete }) => (
 const LoadingSkeleton = () => (
   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
     {[...Array(3)].map((_, i) => (
-      <div key={i} className="bg-gray-200 rounded-lg p-6 animate-pulse h-64"></div>
+      <div
+        key={i}
+        className="bg-gray-200 rounded-lg p-6 animate-pulse h-64"
+      ></div>
     ))}
   </div>
 );
@@ -114,7 +121,7 @@ const CustomerDashboard = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState("all");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -130,11 +137,15 @@ const CustomerDashboard = () => {
         );
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const ticketsData = querySnapshot.docs.map(doc => ({
+          const ticketsData = querySnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
-            displayDate: new Date(doc.data().createdAt?.seconds * 1000).toLocaleDateString(),
-            displayTime: new Date(doc.data().createdAt?.seconds * 1000).toLocaleTimeString()
+            displayDate: new Date(
+              doc.data().createdAt?.seconds * 1000
+            ).toLocaleDateString(),
+            displayTime: new Date(
+              doc.data().createdAt?.seconds * 1000
+            ).toLocaleTimeString(),
           }));
           setTickets(ticketsData);
           setLoading(false);
@@ -152,15 +163,15 @@ const CustomerDashboard = () => {
   }, [user]);
 
   // Filter tickets by status
-  const openTickets = tickets.filter(t => t.status === "Open");
-  const inProgressTickets = tickets.filter(t => t.status === "In Progress");
-  const resolvedTickets = tickets.filter(t => t.status === "Resolved");
+  const openTickets = tickets.filter((t) => t.status === "Open");
+  const inProgressTickets = tickets.filter((t) => t.status === "In Progress");
+  const resolvedTickets = tickets.filter((t) => t.status === "Resolved");
 
   const handleUpdateStatus = async (ticketId, newStatus) => {
     try {
       await updateDoc(doc(db, "tickets", ticketId), {
         status: newStatus,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       });
     } catch (err) {
       console.error("Error updating ticket status:", err);
@@ -170,7 +181,7 @@ const CustomerDashboard = () => {
 
   const handleDeleteTicket = async (ticketId) => {
     if (!window.confirm("Are you sure you want to delete this ticket?")) return;
-    
+
     try {
       await deleteDoc(doc(db, "tickets", ticketId));
     } catch (err) {
@@ -190,7 +201,7 @@ const CustomerDashboard = () => {
         <div className="text-center p-8">
           <h1 className="text-3xl font-bold mb-4">Please log in to continue</h1>
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
             className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
           >
             Go to Login
@@ -202,38 +213,39 @@ const CustomerDashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-gray-700 text-white">
-    
       <header className="bg-gray-800 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="text-xl font-bold tracking-wide">Customer Portal</div>
+              <div className="text-xl font-bold tracking-wide">
+                Customer Portal
+              </div>
             </div>
-            
+
             <nav className="hidden md:flex space-x-2">
-              <Link 
-                to="/ticket-form" 
+              <Link
+                to="/ticket-form"
                 className="text-white hover:bg-red-500 px-4 py-2 rounded-md transition duration-200"
                 aria-label="Create new ticket"
               >
                 Create Ticket
               </Link>
-              <Link 
-                to="/dashboard" 
+              <Link
+                to="/dashboard"
                 className="text-white hover:bg-red-500 px-4 py-2 rounded-md transition duration-200"
                 aria-label="View my tickets"
               >
                 My Tickets
               </Link>
-              <button 
-                onClick={handleLogout} 
+              <button
+                onClick={handleLogout}
                 className="text-white hover:bg-red-500 px-4 py-2 rounded-md transition duration-200"
                 aria-label="Logout"
               >
                 Logout
               </button>
             </nav>
-            
+
             <div className="md:hidden flex items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -249,25 +261,25 @@ const CustomerDashboard = () => {
             </div>
           </div>
         </div>
-        
+
         {mobileMenuOpen && (
           <div className="md:hidden bg-gray-800 pb-3 px-2">
             <div className="space-y-1">
-              <Link 
-                to="/ticket-form" 
+              <Link
+                to="/ticket-form"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-red-500"
               >
                 Create Ticket
               </Link>
-              <Link 
-                to="/dashboard" 
+              <Link
+                to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-red-500"
               >
                 My Tickets
               </Link>
-              <button 
+              <button
                 onClick={() => {
                   handleLogout();
                   setMobileMenuOpen(false);
@@ -286,8 +298,8 @@ const CustomerDashboard = () => {
           {error && (
             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
               {error}
-              <button 
-                onClick={() => setError(null)} 
+              <button
+                onClick={() => setError(null)}
                 className="float-right font-bold"
                 aria-label="Dismiss error"
               >
@@ -304,12 +316,15 @@ const CustomerDashboard = () => {
               Customer Support Dashboard
             </p>
             <div className="max-w-3xl mx-auto bg-gray-100 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">How can we help you today?</h2>
+              <h2 className="text-2xl font-bold mb-4">
+                How can we help you today?
+              </h2>
               <p className="mb-6 text-gray-600">
-                Our support team is ready to assist you with any issues or questions you may have.
+                Our support team is ready to assist you with any issues or
+                questions you may have.
               </p>
-              <Link 
-                to="/ticket-form" 
+              <Link
+                to="/ticket-form"
                 className="inline-block bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 shadow-md"
               >
                 Create New Ticket
@@ -319,20 +334,32 @@ const CustomerDashboard = () => {
 
           <div className="flex border-b border-gray-200 mb-6">
             <button
-              className={`py-2 px-4 font-medium ${activeTab === 'open' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-500 hover:text-gray-700'}`}
-              onClick={() => setActiveTab('open')}
+              className={`py-2 px-4 font-medium ${
+                activeTab === "open"
+                  ? "text-red-500 border-b-2 border-red-500"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setActiveTab("open")}
             >
               Open ({openTickets.length})
             </button>
             <button
-              className={`py-2 px-4 font-medium ${activeTab === 'inProgress' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-500 hover:text-gray-700'}`}
-              onClick={() => setActiveTab('inProgress')}
+              className={`py-2 px-4 font-medium ${
+                activeTab === "inProgress"
+                  ? "text-red-500 border-b-2 border-red-500"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setActiveTab("inProgress")}
             >
               In Progress ({inProgressTickets.length})
             </button>
             <button
-              className={`py-2 px-4 font-medium ${activeTab === 'resolved' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-500 hover:text-gray-700'}`}
-              onClick={() => setActiveTab('resolved')}
+              className={`py-2 px-4 font-medium ${
+                activeTab === "resolved"
+                  ? "text-red-500 border-b-2 border-red-500"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setActiveTab("resolved")}
             >
               Resolved ({resolvedTickets.length})
             </button>
@@ -370,6 +397,8 @@ const CustomerDashboard = () => {
               )}
             </>
           )}
+
+
         </div>
       </main>
     </div>

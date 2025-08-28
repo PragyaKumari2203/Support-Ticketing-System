@@ -74,6 +74,7 @@ const TicketCard = ({ ticket, onStatusChange, onAssign }) => (
             <option value="Unassigned">Unassigned</option>
             <option value="Frontend Team">Frontend Team</option>
             <option value="Backend Team">Backend Team</option>
+            <option value="DataBase Team">DataBase Team</option>
             <option value="Mobile Team">Mobile Team</option>
           </select>
         </div>

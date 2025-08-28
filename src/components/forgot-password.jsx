@@ -199,7 +199,7 @@ const ForgotPassword = () => {
           <div className="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
             {message}
             <button 
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/')}
               className="mt-4 w-full py-2 px-4 text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors"
             >
               Back to Login
@@ -253,7 +253,7 @@ const ForgotPassword = () => {
             
             <div className="mt-4 text-center">
               <Link 
-                to="/login" 
+                to="/" 
                 className="text-sm text-red-500 hover:underline transition-colors"
               >
                 Remember your password? Sign in

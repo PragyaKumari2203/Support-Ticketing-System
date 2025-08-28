@@ -17,25 +17,34 @@ const TicketForm = () => {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
 
+
   const validateForm = () => {
-    if (!title.trim()) {
-      setError("Title is required");
-      return false;
-    }
-    if (!description.trim() || description.length < 10) {
-      setError("Description must be at least 10 characters");
-      return false;
-    }
-    if (!/^\S+@\S+\.\S+$/.test(contactEmail)) {
-      setError("Please enter a valid email address");
-      return false;
-    }
-    if (!/^[\d\s\-()+]{8,}$/.test(phone)) {
-      setError("Please enter a valid phone number");
-      return false;
-    }
-    return true;
-  };
+  if (!title.trim()) {
+    setError("Title is required");
+    return false;
+  }
+  if (!description.trim() || description.length < 10) {
+    setError("Description must be at least 10 characters");
+    return false;
+  }
+
+  // Strict email check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(contactEmail)) {
+    setError("Please enter a valid email address");
+    return false;
+  }
+
+  // Phone number check: exactly 10 digits only
+  const phoneRegex = /^\d{10}$/;
+  if (!phoneRegex.test(phone)) {
+    setError("Phone number must be exactly 10 digits");
+    return false;
+  }
+
+  return true;
+};
+
 
   const resetForm = () => {
     setTitle("");

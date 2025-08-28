@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
@@ -156,11 +155,11 @@ const Dashboard = () => {
               <>
                 <button
                   onClick={goToDashboard}
-                     className="w-full text-left block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                  className="w-full text-left block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
                 >
                   Back to Dashboard
                 </button>
-               
+
                 {userRole === "customer" && (
                   <Link
                     to="/ticket-form"
@@ -169,7 +168,7 @@ const Dashboard = () => {
                     New Ticket
                   </Link>
                 )}
-                 <button
+                <button
                   onClick={handleLogout}
                   className="w-full text-left block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
                 >
@@ -264,11 +263,9 @@ const Dashboard = () => {
                             </span>
                           </div>
 
-                          {userRole === "agent" && (
-                            <div className="col-span-2">
-                              <span className="font-semibold">
-                                Assigned To:
-                              </span>
+                          <div className="col-span-2">
+                            <span className="font-semibold">Assigned To:</span>
+                            {userRole === "agent" ? (
                               <select
                                 value={ticket.assignedTo || "Unassigned"}
                                 onChange={(e) =>
@@ -283,10 +280,17 @@ const Dashboard = () => {
                                 <option value="Backend Team">
                                   Backend Team
                                 </option>
+                                <option value="ddddd Team">
+                                  DataBase Team
+                                </option>
                                 <option value="Mobile Team">Mobile Team</option>
                               </select>
-                            </div>
-                          )}
+                            ) : (
+                              <span className="ml-2">
+                                {ticket.assignedTo || "Unassigned"}
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex justify-between items-center pt-2">
@@ -332,4 +336,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
