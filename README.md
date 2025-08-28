@@ -4,7 +4,7 @@ A role-based support ticket management system built using **React, Firebase Auth
 
 ## 🚀 Live Demo
 
-[\[[Click here to access the deployed app](https://support-ticketing-system-e0647.web.app/dashboard)\]]
+[\[[Click here to access the deployed app](https://support-ticketing-system-e0647.web.app)\]]
 
 
 ## 🔑 Authentication Credentials
